@@ -21,7 +21,7 @@ def hangman(word):
     elif tebakan in huruf_tebakan:
       tebakan = input('Kamu telah menebak huruf tersebut, silahkan masukkan huruf lain:')
     else:
-      huruf_tebakan += tebakan
+      huruf_tebakan.append(tebakan.lower)
       if tebakan not in word:
           chance -= 1
           print('Tebakan salah')
@@ -30,7 +30,7 @@ def hangman(word):
           print('Tebakan benar')
           print('Kesempatan tersisa:', chance)
           print('Tebakan:',Yangditebak(word, huruf_tebakan))
-          if '_' not in Yangditebak(word, huruf_tebakan):
+          if Yangditebak(word, huruf_tebakan) == word:
             print('Selamat kamu berhasil menebak kata rahasia:',word)
             break
   if chance == 0:

@@ -1,35 +1,43 @@
-a = ''
-def updateText(guessed_letters,secretWord):
-  display = ""
-  for letter in secretWord:
-      if letter.lower() in guessed_letters:
-          display += letter
+#fungsi untuk menampilkan tebakan benar
+def Yangditebak(word,huruf_tebakan):
+    ditebak = ''
+    for i in word:
+        if i in huruf_tebakan:
+            ditebak+= (i)
+        else:
+            ditebak+='_'
+    return ditebak
+#fungsi untuk bermain
+def hangman(word):
+  chance = 6 
+  huruf_tebakan = []
+  while chance > 0 :
+    print("Masukkan sebuah huruf tebakan")
+    tebakan = input('Huruf:')
+    if not tebakan.isalpha():
+      tebakan = input('Masukan huruf:')
+    elif len(tebakan) != 1:
+      tebakan = input('Masukan sebuah huruf:')
+    elif tebakan in huruf_tebakan:
+      tebakan = input('Kamu telah menebak huruf tersebut, silahkan masukkan huruf lain:')
+    else:
+      huruf_tebakan += tebakan
+      if tebakan not in word:
+          chance -= 1
+          print('Tebakan salah')
+          print('Kesempatan tersisa:', chance)
       else:
-          display += "_"
-  print(display)
-    
-def hangman(secretWord):
-  chances = 6
-  guessed_letters = []
-  while chances > 0:
-      guess = input("Guess a letter in my secret word: ")
-      if len(guess) != 1:
-          print("Please give me one letter.")
-      elif not guess.isalpha():
-          print("Please give me a letter.")
-      elif guess.lower() in guessed_letters:
-          print("You already guessed that letter.")
-      else:
-          guessed_letters.append(guess.lower())
-          if guess.lower() in secretWord.lower():
-              print("Congrats, you guessed a letter!")
-          else:
-              chances -= 1
-              print("Better luck next time. You have {} chances left.".format(chances))
-          updateText(guessed_letters,secretWord)
-          if updateText(guessed_letters) == secretWord:
-            print("Congratulations! You guessed the word:", secretWord)
+          print('Tebakan benar')
+          print('Kesempatan tersisa:', chance)
+          print('Tebakan:',Yangditebak(word, huruf_tebakan))
+          if '_' not in Yangditebak(word, huruf_tebakan):
+            print('Selamat kamu berhasil menebak kata rahasia:',word)
             break
+  if chance == 0:
+    print('Kamu kalah')
+    print('Kamu kehabisan kesempatan menebak')
+    print('Kamu kalah!')
+    print('Kata yang benar adalah:', word)
 
-secretWord = 'Rahasia'
-hangman(secretWord)
+#Baris yang memanggil fungsi hangman(kata_rahasia)
+hangman('kucing')
